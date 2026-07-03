@@ -1,0 +1,15 @@
+x-runtipi:
+  schema_version: 2
+
+services:
+  byparr:
+    image: ghcr.io/thephaseless/byparr:latest
+    x-runtipi:
+      is_main: true
+      internal_port: 8191
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: ${TZ}
+    volumes:
+    restart: unless-stopped

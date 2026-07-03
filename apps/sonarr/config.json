@@ -1,0 +1,17 @@
+{
+  "name": "Sonarr",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8989,
+  "id": "sonarr",
+  "tipi_version": 1,
+  "version": "1.0",
+  "categories": ["media"],
+  "description": "Sonarr (custom store, declarative arr stack). Keys/config injected via host user-config.",
+  "short_desc": "Sonarr",
+  "author": "linuxserver.io",
+  "source": "https://github.com/Aethryl/runtipi-appstore-addons",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Seerr",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 5055,
+  "id": "seerr",
+  "tipi_version": 1,
+  "version": "1.0",
+  "categories": ["media"],
+  "description": "Seerr (custom store, declarative arr stack). Keys/config injected via host user-config.",
+  "short_desc": "Seerr",
+  "author": "linuxserver.io",
+  "source": "https://github.com/Aethryl/runtipi-appstore-addons",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"]
+}

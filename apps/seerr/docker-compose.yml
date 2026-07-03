@@ -1,0 +1,17 @@
+x-runtipi:
+  schema_version: 2
+
+services:
+  seerr:
+    image: seerr/seerr:latest
+    x-runtipi:
+      is_main: true
+      internal_port: 5055
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: ${TZ}
+      LOG_LEVEL: info
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/config
+    restart: unless-stopped
