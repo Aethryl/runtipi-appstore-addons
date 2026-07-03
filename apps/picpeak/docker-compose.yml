@@ -29,9 +29,11 @@ services:
       JWT_SECRET: ${PICPEAK_JWT_SECRET}
       STORAGE_PATH: /app/storage
       PHOTOS_DIR: /app/storage/events
-      ADMIN_EMAIL: fabian@studyworks.nl
-      FRONTEND_URL: https://galleries.spaceserver.stream
-      COOKIE_SECURE: "true"
+      # No ADMIN_EMAIL/ADMIN_PASSWORD → PicPeak runs its in-browser first-run admin setup.
+      # FRONTEND_URL must match how it's reached. LAN default now; switch to the public
+      # https domain once NPM fronts it (via app.env override, no store change needed).
+      FRONTEND_URL: ${PICPEAK_FRONTEND_URL:-http://192.168.178.138:8400}
+      COOKIE_SECURE: ${PICPEAK_COOKIE_SECURE:-auto}
       COOKIE_SAMESITE: Lax
       TZ: ${TZ}
     volumes:
