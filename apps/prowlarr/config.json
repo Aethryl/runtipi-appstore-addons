@@ -1,0 +1,17 @@
+{
+  "name": "Prowlarr",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 9696,
+  "id": "prowlarr",
+  "tipi_version": 1,
+  "version": "1.0",
+  "categories": ["media"],
+  "description": "Prowlarr indexer manager (custom store, declarative arr stack). API key pinned via user-config app.env so Terraform + Configarr can drive it.",
+  "short_desc": "Indexer manager",
+  "author": "linuxserver.io",
+  "source": "https://github.com/Prowlarr/Prowlarr",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"]
+}

@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ}
+      - PROWLARR__AUTH__APIKEY=${PROWLARR_API_KEY}
+      - PROWLARR__AUTH__METHOD=External
+    dns:
+      - ${DNS_IP}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data:/config
+    ports:
+      - ${APP_PORT}:9696
+    restart: unless-stopped
+    networks:
+      - tipi_main_network
+    labels:
+      traefik.enable: true
+      traefik.http.services.prowlarr.loadbalancer.server.port: 9696
+      traefik.http.routers.prowlarr.rule: Host(`${APP_DOMAIN}`)
+      traefik.http.routers.prowlarr.entrypoints: websecure
+      traefik.http.routers.prowlarr.service: prowlarr
+      traefik.http.routers.prowlarr.tls.certresolver: myresolver
+      traefik.http.routers.prowlarr-local.rule: Host(`prowlarr.${LOCAL_DOMAIN}`)
+      traefik.http.routers.prowlarr-local.entrypoints: websecure
+      traefik.http.routers.prowlarr-local.service: prowlarr
+      traefik.http.routers.prowlarr-local.tls: true
+      runtipi.managed: true
