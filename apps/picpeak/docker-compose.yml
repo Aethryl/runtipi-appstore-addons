@@ -16,6 +16,10 @@ services:
 
   backend:
     image: ghcr.io/picpeak/picpeak/backend:stable
+    # Run as nodejs (1001) directly so the entrypoint SKIPS its chown of /app/storage — that
+    # chown fails over the NFS vault mount (can't re-own files it doesn't own / root-squash).
+    # Host dirs are pre-made writable for 1001 (→ host 101001) instead. See picpeak/README.md.
+    user: "1001:1001"
     environment:
       NODE_ENV: production
       DB_HOST: postgres
