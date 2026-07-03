@@ -11,5 +11,4 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: ${TZ}
-    volumes:
     restart: unless-stopped
