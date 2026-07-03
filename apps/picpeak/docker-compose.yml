@@ -33,9 +33,9 @@ services:
       JWT_SECRET: ${PICPEAK_JWT_SECRET}
       STORAGE_PATH: /app/storage
       PHOTOS_DIR: /app/storage/events
-      # PicPeak always auto-creates an admin (no self-serve wizard); use Fabian's email +
-      # auto-generated password (printed to logs / ADMIN_CREDENTIALS.txt) — change on first login.
-      ADMIN_EMAIL: fabian@studyworks.nl
+      # PicPeak always auto-creates an admin (no self-serve wizard); use Fabian's homelab email
+      # + auto-generated password (printed to logs / ADMIN_CREDENTIALS.txt) — change on first login.
+      ADMIN_EMAIL: fabianrutten@gmail.com
       # FRONTEND_URL must match how it's reached. LAN default now; switch to the public
       # https domain once NPM fronts it (via app.env PICPEAK_FRONTEND_URL, no store change).
       FRONTEND_URL: ${PICPEAK_FRONTEND_URL:-http://192.168.178.138:8400}
