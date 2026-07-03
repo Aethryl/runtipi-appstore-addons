@@ -12,8 +12,6 @@ services:
     environment:
       BRAND_TITLE: ${BRAND_TITLE:-Fabian Rutten Photography}
       BRAND_DESCRIPTION: ${BRAND_DESCRIPTION:-Your gallery.}
-    depends_on:
-      - backend
     restart: unless-stopped
 
   backend:
@@ -41,9 +39,6 @@ services:
       - /galleries:/app/storage
       - ${APP_DATA_DIR}/data:/app/data
       - ${APP_DATA_DIR}/logs:/app/logs
-    depends_on:
-      - postgres
-      - redis
     restart: unless-stopped
 
   postgres:
