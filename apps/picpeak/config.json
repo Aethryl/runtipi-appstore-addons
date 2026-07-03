@@ -12,7 +12,6 @@
   "short_desc": "Client photo delivery galleries",
   "author": "the-luap",
   "source": "https://github.com/the-luap/picpeak",
-  "website": "https://picpeak.app",
   "form_fields": [],
   "supported_architectures": ["arm64", "amd64"]
 }
