@@ -1,0 +1,65 @@
+x-runtipi:
+  schema_version: 2
+
+services:
+  # Main = frontend (nginx). Serves the React app and proxies /api + /uploads to the
+  # `backend` service on :3000, so the backend service name MUST stay `backend`.
+  frontend:
+    image: ghcr.io/picpeak/picpeak/frontend:stable
+    x-runtipi:
+      is_main: true
+      internal_port: 80
+    environment:
+      BRAND_TITLE: ${BRAND_TITLE:-Fabian Rutten Photography}
+      BRAND_DESCRIPTION: ${BRAND_DESCRIPTION:-Your gallery.}
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  backend:
+    image: ghcr.io/picpeak/picpeak/backend:stable
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: "5432"
+      DB_USER: picpeak
+      DB_NAME: picpeak
+      DB_PASSWORD: ${PICPEAK_DB_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_PASSWORD: ${PICPEAK_REDIS_PASSWORD}
+      JWT_SECRET: ${PICPEAK_JWT_SECRET}
+      STORAGE_PATH: /app/storage
+      PHOTOS_DIR: /app/storage/events
+      ADMIN_EMAIL: fabian@studyworks.nl
+      FRONTEND_URL: https://galleries.spaceserver.stream
+      COOKIE_SECURE: "true"
+      COOKIE_SAMESITE: Lax
+      TZ: ${TZ}
+    volumes:
+      # Bulk photos on the vault RAID share (LXC 104 mp1: /mnt/pve/files/client-galleries → /galleries)
+      - /galleries:/app/storage
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${APP_DATA_DIR}/logs:/app/logs
+    depends_on:
+      - postgres
+      - redis
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: picpeak
+      POSTGRES_DB: picpeak
+      POSTGRES_PASSWORD: ${PICPEAK_DB_PASSWORD}
+      TZ: ${TZ}
+    volumes:
+      - ${APP_DATA_DIR}/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --requirepass ${PICPEAK_REDIS_PASSWORD}
+    volumes:
+      - ${APP_DATA_DIR}/redis:/data
+    restart: unless-stopped
