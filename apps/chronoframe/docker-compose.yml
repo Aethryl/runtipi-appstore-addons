@@ -1,0 +1,23 @@
+x-runtipi:
+  schema_version: 2
+
+services:
+  chronoframe:
+    image: ghcr.io/hoshinosuzumi/chronoframe:latest
+    x-runtipi:
+      is_main: true
+      internal_port: 3000
+    environment:
+      # Admin is auto-created on first boot (no self-serve wizard). Homelab standard email;
+      # default password is CF1234@! — CHANGE ON FIRST LOGIN.
+      CFRAME_ADMIN_EMAIL: fabianrutten@gmail.com
+      CFRAME_ADMIN_NAME: Fabian
+      # 32-char session secret — injected from host user-config/addons/chronoframe/app.env (never committed).
+      NUXT_SESSION_PASSWORD: ${CHRONOFRAME_SESSION_PASSWORD}
+      # Local storage (default provider is s3 — must override). Photos land under the data volume.
+      NUXT_STORAGE_PROVIDER: local
+      NUXT_PROVIDER_LOCAL_PATH: /app/data/storage
+      TZ: ${TZ}
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    restart: unless-stopped

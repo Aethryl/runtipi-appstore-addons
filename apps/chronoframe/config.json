@@ -1,0 +1,17 @@
+{
+  "name": "ChronoFrame",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8500,
+  "id": "chronoframe",
+  "tipi_version": 1,
+  "version": "1.0",
+  "categories": ["photography"],
+  "description": "ChronoFrame — self-hosted personal photo gallery (Nuxt): EXIF parsing, geolocation + map exploration, large-image rendering. Local storage under app-data for now. NUXT_SESSION_PASSWORD injected via host user-config app.env (never committed).",
+  "short_desc": "Self-hosted photo gallery",
+  "author": "HoshinoSuzumi",
+  "source": "https://github.com/HoshinoSuzumi/chronoframe",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"]
+}
