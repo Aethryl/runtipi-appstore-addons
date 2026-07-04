@@ -1,0 +1,35 @@
+x-runtipi:
+  schema_version: 2
+
+services:
+  # Single container: the prebuilt photoview image serves the UI itself on :80 (PHOTOVIEW_SERVE_UI=1
+  # baked in). SQLite backend so no DB sidecar. Admin user is created in-browser on first visit
+  # (no self-serve wizard bypass / env admin), then you set the media path (/photos) on the init page.
+  photoview:
+    image: photoview/photoview:2
+    x-runtipi:
+      is_main: true
+      internal_port: 80
+    # Upstream recommends unconfined seccomp/apparmor for some restricted hosts (incl. LXC).
+    security_opt:
+      - seccomp:unconfined
+      - apparmor:unconfined
+    environment:
+      PHOTOVIEW_DATABASE_DRIVER: sqlite
+      PHOTOVIEW_SQLITE_PATH: /home/photoview/database/photoview.db
+      PHOTOVIEW_LISTEN_IP: "0.0.0.0"
+      PHOTOVIEW_LISTEN_PORT: "80"
+      PHOTOVIEW_MEDIA_CACHE: /home/photoview/media-cache
+      # Optional map features — inject via host user-config/addons/photoview/app.env (never committed).
+      MAPBOX_TOKEN: ${PHOTOVIEW_MAPBOX_TOKEN:-}
+      TZ: ${TZ}
+    volumes:
+      # DB + thumbnail/video cache on LXC-local app-data. These dirs MUST be writable by uid 999
+      # (the photoview user); Runtipi creates them root-owned, so they're pre-chowned to 999:999
+      # on the box at install (unprivileged LXC → host 100999). See photoview/README.md.
+      - ${APP_DATA_DIR}/database:/home/photoview/database
+      - ${APP_DATA_DIR}/media-cache:/home/photoview/media-cache
+      # Personal library, READ-ONLY. Host /photos = LXC 104 bind of vault stack_storage/Fotos
+      # (mp2). Scoped to Fotos only — the stack_storage root also holds private backups/secrets.
+      - /photos:/photos:ro
+    restart: unless-stopped

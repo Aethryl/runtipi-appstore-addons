@@ -1,0 +1,17 @@
+{
+  "name": "Photoview",
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "port": 8600,
+  "id": "photoview",
+  "tipi_version": 1,
+  "version": "1.0",
+  "categories": ["photography"],
+  "description": "Photoview — self-hosted personal photo library: scans a read-only media folder into a timeline + albums, with EXIF, map (optional Mapbox token), face recognition, RAW + video. SQLite backend (single container). Serves the personal 'Fotos' library from the vault pool read-only at /photos; point the init page at /photos. Optional MAPBOX_TOKEN injected via host user-config app.env (never committed).",
+  "short_desc": "Self-hosted personal photo library",
+  "author": "viktorstrate",
+  "source": "https://github.com/photoview/photoview",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"]
+}
